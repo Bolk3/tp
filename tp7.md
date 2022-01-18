@@ -43,17 +43,19 @@ cette fonction sert a contourné un probleme rencontrée durant la conception de
 ````python
 def Existe(f:str, int:list):
     list_eval = []
-
     g,d = str(int[0]).split("."), str(int[1]).split(".")
-    if len(g) > len(d):
-        pas = 1/10**len(g[1])
-    elif len(g) < len(d):
-        pas = 1/10**len(d[1])
+    if len(g) == 1 and len(d) == 1:
+        pas = 1
     else:
-        if len(g[len(g)-1]) > len(d[len(d)-1]):
-            pas = 1/10**len(g[len(g)-1])
+        if len(g) > len(d):
+            pas = 1/10**len(g[1])
+        elif len(g) < len(d):
+            pas = 1/10**len(d[1])
         else:
-            pas = 1/10**len(d[len(d)-1])
+            if len(g[len(g)-1]) > len(d[len(d)-1]):
+                pas = 1/10**len(g[len(g)-1])
+            else:
+                pas = 1/10**len(d[len(d)-1])
     
     if int[0] > int[1]:
         for i in Range_f(int[1], int[0], pas):
@@ -64,9 +66,18 @@ def Existe(f:str, int:list):
             temp = f.replace("x", str(i))
             list_eval.append(temp)
     
-    for poss in list_eval:
-        if eval(poss) == 0:
-            return True
+    negpos = False
+    if eval(list_eval[0]) < 0:
+        for poss in list_eval:
+            if eval(poss) >= 0:
+                negpos = True
+    else:
+        for poss in list_eval:
+            if eval(poss) <= 0:
+                negpos = True
+    
+    if negpos == True:
+        return True
     return f"la fonction f(x) ne contient pas de racine dans l'intervale {int}"
 ````
 ### 3.New_int
