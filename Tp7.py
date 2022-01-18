@@ -1,3 +1,6 @@
+from ast import Break
+
+
 def Existe(f:str, int:list):
     """verifie si dans un intervale donnée la fonction f a au moins une racine
 
@@ -24,26 +27,27 @@ def New_int(f:str, int:list):
         f (str): fonction dans laquelle on recherche une racine 
         int (list): l'intervalle dans lequel la racine est recherchée 
     """
-    moyenne = (int[0]+int[1])/2
+    moyenne = (int[1] + int[0])/2
     g_int, d_int = [int[0], moyenne], [moyenne, int[1]]
-    if g_int[0] > g_int[1]:
-        d_gauche = g_int[0] - g_int[1]
-    else:
-        d_gauche = g_int[1] - g_int[0]
-
-    if d_int[0] > d_int[1]:
-        d_droite = d_int[0] - d_int[0]
-    else:
-        d_droite = d_int[1] - d_int[0]
-        
-    if Existe(f, g_int) == True and Existe(f, d_int) == True:
-        return [[g_int, d_gauche], [d_int, d_droite]]
-    else:
-        if Existe(f, g_int) == True:
-            return [g_int, d_gauche]
-        else:
-            return [d_int, d_droite]
     
+    r = []
+    if Existe(f, g_int) == True:
+        if g_int[0] > moyenne:
+            distance = g_int[0] - moyenne
+        else:
+            distance = moyenne - g_int[0]
+        temp = [g_int, distance]
+        r.append(temp)
+    
+    if Existe(f, d_int) == True:
+        if d_int[1] > moyenne:
+            distance = d_int[1] - moyenne
+        else:
+            distance = moyenne - d_int[1]
+        temp = [d_int, distance]
+        r.append(temp)
+        
+    return r
     
 def Dichotomie(f:str, int:list, crit_x):
     """effectue la recherche de racine jusqu'a 10**-(crit_x)
@@ -55,8 +59,39 @@ def Dichotomie(f:str, int:list, crit_x):
     """
     i = 0
     nv_int = New_int(f, int)
-    for i in range(4):
-        nv_int = New_int(f, nv_int[0])
-    return nv_int
+    moyenne = (nv_int[0][0][0] + nv_int[0][0][1]) /2
+    h = str(moyenne).split(".")[1]
+    while len(h) < crit_x:
+        nv_int = New_int(f, nv_int[0][0])
+        moyenne = (nv_int[0][0][0] + nv_int[0][0][1]) /2
+        h = str(moyenne).split(".")[1]
+        i += 1
+    return [moyenne, i]
         
-print(Dichotomie("(x+1)**2", [-1, 5], 4))
+def main():
+    fonction = input("")
+    
+    while True:
+        try:
+            min_int = float(input(""))
+            Break
+        except:
+            print("")
+    
+    while True:
+        try:
+            max_int = float(input(""))
+            break
+        except:
+            print("")
+    
+    while True:
+        try:
+            degres = int(input(""))
+            if degres > 0:
+                Break
+        except:
+            print("")
+    
+    reponse = Dichotomie(fonction, [min_int, max_int], degres)
+        
