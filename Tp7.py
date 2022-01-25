@@ -1,5 +1,4 @@
-from ast import Break
-
+from math import sqrt
 
 def Existe(f:str, int:list):
     """verifie si dans un intervale donnée la fonction f a au moins une racine
@@ -12,7 +11,7 @@ def Existe(f:str, int:list):
         r (bool): True si une racine est trouvée dans la fonction
     """
     list_eval = [eval(f.replace("x", str(int[0])))
-                 , eval(f.replace("x", str(int[1])))]
+                , eval(f.replace("x", str(int[1])))]
     if list_eval[0] <= 0 and list_eval[1] >= 0:
         return True
     elif list_eval[0] >= 0 and list_eval[1] <= 0:
@@ -67,31 +66,34 @@ def Dichotomie(f:str, int:list, crit_x):
         h = str(moyenne).split(".")[1]
         i += 1
     return [moyenne, i]
-        
+
 def main():
-    fonction = input("")
+    fonction = input("quelle est votre fonction (celle-ci doit etre monotone):\n")
     
     while True:
         try:
-            min_int = float(input(""))
-            Break
-        except:
-            print("")
-    
-    while True:
-        try:
-            max_int = float(input(""))
+            min_int = float(input("quel est le minimum de l'intervalle de la fonction:\n"))
             break
         except:
-            print("")
+            print("la valeur n'est pas possible")
     
     while True:
         try:
-            degres = int(input(""))
-            if degres > 0:
-                Break
+            max_int = float(input("quel est le maximum de l'intervalle de la fonction:\n"))
+            break
         except:
-            print("")
+            print("la valeur n'est pas possbile")
+    
+    while True:
+        try:
+            degres = int(input("quelle est la pressition de la methode dichotomique?:\n"))
+            if degres > 0:
+                break
+        except:
+            print("la valeur n'est pas possible")
     
     reponse = Dichotomie(fonction, [min_int, max_int], degres)
+    print(f"avec la methode dichotomique la racine est de {reponse[0]} avec une pressition de 10**-{degres}\nla fonction s'est repetée {reponse[1]} fois")
         
+if __name__ == "__main__":
+    main()
