@@ -40,17 +40,13 @@ def f_lissage(L:list, n:int):
         
         #obtenir les n element nessesaire au lissage
         moyenne.append(L[i])
-        for j in range(n):
-            try:
+        for j in range(1, n+1):
+            if i-j > 0:
                 moyenne.append(L[i-j])
-            except:
-                continue
-        for j in range(n):
-            try:
+        for j in range(1, n+1):
+            if i+j <= len(L)-1:
                 moyenne.append(L[i+j])
-            except:
-                continue
-        
+                
         # prosses du lissage
         r.append(sum(moyenne)/len(moyenne))
     return r
@@ -58,7 +54,9 @@ def f_lissage(L:list, n:int):
 
 def f_affiche_liste(fig_i:int, Liste_x:list, liste_Y:list):
     import matplotlib.pyplot as plt 
-    plt.plot(Liste_x, liste_Y)
+    x_lisse , y_lisse = f_lissage(Liste_x, 1), f_lissage(liste_Y, 1)
+    plt.plot(Liste_x, liste_Y, "r")
+    plt.plot(x_lisse, y_lisse, "b--")
     plt.title("Figure " + str(fig_i))
     plt.show()
 
@@ -90,9 +88,8 @@ def f_equation_droite(Liste_x:list, Liste_y:list):
 
 def f_n_dernier(n:int, L:list):
     r = []
-    r.append(L[len(L)-1])
     for i in range(1, n+1):
-        r.append(L[len(L) - n+1])
+        r.append(L[len(L) - i])
     return r
 
 def f_ab(Liste_x:list, Liste_y:list, Nb_Val:int):
@@ -108,6 +105,3 @@ def f_objectif(a:float, b:float, Objectif):
     else:
         x = (a * Objectif) + b 
         return x 
-    
-if __name__ == "__main__":
-    print(f_ab([1,3,4,5,9], [0,1,3,8,10], 2))
