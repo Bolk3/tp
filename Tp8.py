@@ -75,7 +75,17 @@ def f_somme_prod(L1:list, L2:list):
 
 
 def f_equation_droite(Liste_x:list, Liste_y:list):
-    pass
+    xm = f_moyenne(Liste_x)
+    ym = f_moyenne(Liste_y)
+    a_h = 0
+    a_b = 0
+    for i in range(len(Liste_x)):
+        a_h += (Liste_x[i] - xm) * (Liste_y[i] - ym)
+    for i in range(len(Liste_x)):
+        a_b += (Liste_x[i] - xm) ** 2
+    a = a_h / a_b
+    b = ym - a*xm
+    return [a, b]
 
 
 def f_n_dernier(n:int, L:list):
@@ -86,7 +96,9 @@ def f_n_dernier(n:int, L:list):
     return r
 
 def f_ab(Liste_x:list, Liste_y:list, Nb_Val:int):
-    pass
+    x_derniere = f_n_dernier(Nb_Val, Liste_x)
+    y_derniere = f_n_dernier(Nb_Val, Liste_y)
+    return f_equation_droite(x_derniere, y_derniere)
 
 
 def f_objectif(a:float, b:float, Objectif):
@@ -98,4 +110,4 @@ def f_objectif(a:float, b:float, Objectif):
         return x 
     
 if __name__ == "__main__":
-    print(f_objectif(-1,10,5))
+    print(f_ab([1,3,4,5,9], [0,1,3,8,10], 2))
