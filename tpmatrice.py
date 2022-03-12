@@ -33,7 +33,11 @@ def Permute(M:object,i:int,j:int):
 
 
 def Pivot_partiel(M:object, i:int):
-    pass
+    r = np.copy(M[i][0])
+    for element in M[i]:
+        if element >= r:
+            r = np.copy(element)
+    return r
 
 
 def Transvection(M:object, i:int, j:int, mu:float):
